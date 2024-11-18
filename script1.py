@@ -15,8 +15,6 @@ def insert(item,quantity,price):
     conn.commit()
     conn.close()
 
-insert('Coffee Cup',10,5)
-
 def view():
     conn=sqlite3.connect("lite.db")
     cur=conn.cursor()
@@ -25,4 +23,21 @@ def view():
     conn.close()
     return rows
 
+def delete(item):
+    conn=sqlite3.connect("lite.db")
+    cur=conn.cursor()
+    cur.execute("DELETE FROM store WHERE item=?",(item,))
+    conn.commit()
+    conn.close()
+
+def update(quantity,price,item):
+    conn=sqlite3.connect("lite.db")
+    cur=conn.cursor()
+    cur.execute("UPDATE store SET quantity=?, price=? WHERE item=?",(quantity,price,item))
+    conn.commit()
+    conn.close()
+
+insert('Water Glass', 10, 2.5)
+update(5, 4, 'Coffee Cup')
+# delete('Wine Glass')
 print(view())
